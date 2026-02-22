@@ -9,7 +9,6 @@ backend/*.pyc
 backend/*.pyo
 backend/*.pyd
 backend/.Python
-backend/data.csv
 
 # Python General
 __pycache__/
