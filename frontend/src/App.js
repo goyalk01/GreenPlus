@@ -13,7 +13,7 @@ ChartJS.register(
   LineElement, BarElement, Title, Tooltip, Legend, Filler
 );
 
-const API = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
+const API = process.env.REACT_APP_API_URL || "https://greenpulse-b41g.onrender.com";
 
 // ── Alert Banner ─────────────────────────────────────────────────
 function AlertBanner({ status, metric, deviation }) {
