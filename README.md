@@ -231,6 +231,7 @@ Deploy automatically via GitHub integration.
 ## 📜 License
 
 MIT License © 2026 Krish Goyal
+
 MIT License © 2026 Abhinav Atul
 
 ---
