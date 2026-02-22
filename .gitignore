@@ -1,0 +1,71 @@
+# ===============================
+# Backend (Python)
+# ===============================
+backend/venv/
+backend/env/
+backend/.venv/
+backend/__pycache__/
+backend/*.pyc
+backend/*.pyo
+backend/*.pyd
+backend/.Python
+backend/data.csv
+
+# Python General
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# ===============================
+# Frontend (React)
+# ===============================
+frontend/node_modules/
+frontend/build/
+frontend/.next/
+frontend/out/
+
+# ===============================
+# Virtual Environments
+# ===============================
+venv/
+env/
+ENV/
+
+# ===============================
+# IDE
+# ===============================
+.vscode/
+.idea/
+.vscode/settings.json
+.vscode/launch.json
+*.swp
+*.swo
+*~
+
+# ===============================
+# OS
+# ===============================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# ===============================
+# Logs
+# ===============================
+*.log
+logs/
+
+# ===============================
+# Environment Variables
+# ===============================
+.env*
+
+# ===============================
+# Deployment
+# ===============================
+.vercel/
+.render/
