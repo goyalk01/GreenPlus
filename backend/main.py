@@ -21,7 +21,9 @@ app.add_middleware(
 
 # ── Helper: load CSV once per request ────────────────────────────
 def load_data():
-    return pd.read_csv("data.csv")
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    DATA_PATH = os.path.join(BASE_DIR, "data.csv")
+    return pd.read_csv(DATA_PATH)
 
 # ════════════════════════════════════════════════════════════════
 # ROUTES
