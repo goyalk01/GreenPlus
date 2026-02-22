@@ -16,7 +16,7 @@ python-dateutil==2.9.0.post0
 python-multipart==0.0.22
 pytz==2025.2
 scikit-learn==1.7.2
-scipy==1.15.3
+# scipy==1.15.3
 six==1.17.0
 starlette==0.52.1
 threadpoolctl==3.6.0
