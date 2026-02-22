@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+import os
 import pandas as pd
 from utils import analyze_block, get_leaderboard
 from fastapi.middleware.cors import CORSMiddleware
