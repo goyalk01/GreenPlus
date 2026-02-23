@@ -12,16 +12,31 @@ CO2_PER_WATER = 0.3    # kg CO₂/m³
 TREE_ABSORB   = 21     # kg CO₂ absorbed per tree per year
 KM_PER_CO2    = 4.0    # car km equivalent per kg CO₂
 
-# ── Helper: Rolling anomaly detection ────────────────────────────
+# Replace the _rolling_anomaly function in utils.py with this:
+
 def _rolling_anomaly(series):
-    s   = pd.Series(series)
-    avg = s.rolling(7, min_periods=1).mean()
-    dev = ((s - avg) / avg * 100).round(1)
-    alerts = [
-        "High" if d > 20 else ("Low" if d < -20 else "Normal")
-        for d in dev
-    ]
-    return avg.round(1).tolist(), dev.tolist(), alerts
+    s = pd.Series(series)
+    mean = s.mean()
+    std = s.std()
+    
+    # Constant baseline for the chart based on overall mean
+    avg_list = [round(mean, 1)] * len(s)
+    
+    # Deviation percentage from the mean
+    dev_list = (((s - mean) / mean) * 100).round(1).tolist() if mean != 0 else [0] * len(s)
+    
+    alerts = []
+    for val in s:
+        if (val - mean) > 1.5 * std:
+            alerts.append("High")
+        elif (mean - val) > 1.5 * std:
+            alerts.append("Low")
+        else:
+            alerts.append("Normal")
+            
+    return avg_list, dev_list, alerts
+
+# (The rest of utils.py remains exactly the same)
 
 # ── Helper: Linear regression forecast ──────────────────────────
 def _linear_forecast(series, steps=7):
