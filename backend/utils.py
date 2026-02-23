@@ -16,27 +16,29 @@ KM_PER_CO2    = 4.0    # car km equivalent per kg CO₂
 
 def _rolling_anomaly(series):
     s = pd.Series(series)
-    mean = s.mean()
+    
+    # 1. FOR THE CHART: Calculate the wavy 7-day rolling average
+    rolling_avg = s.rolling(7, min_periods=1).mean()
+    avg_list = rolling_avg.round(1).tolist()
+    
+    # 2. FOR THE ALERTS: Calculate the strict statistical mean and std dev
+    overall_mean = s.mean()
     std = s.std()
     
-    # Constant baseline for the chart based on overall mean
-    avg_list = [round(mean, 1)] * len(s)
+    # Deviation percentage based on the rolling average (for tooltips)
+    dev_list = (((s - rolling_avg) / rolling_avg) * 100).round(1).tolist()
     
-    # Deviation percentage from the mean
-    dev_list = (((s - mean) / mean) * 100).round(1).tolist() if mean != 0 else [0] * len(s)
-    
+    # Trigger High/Low alerts using the 1.5x Standard Deviation rule
     alerts = []
     for val in s:
-        if (val - mean) > 1.5 * std:
+        if (val - overall_mean) > 1.5 * std:
             alerts.append("High")
-        elif (mean - val) > 1.5 * std:
+        elif (overall_mean - val) > 1.5 * std:
             alerts.append("Low")
         else:
             alerts.append("Normal")
             
     return avg_list, dev_list, alerts
-
-# (The rest of utils.py remains exactly the same)
 
 # ── Helper: Linear regression forecast ──────────────────────────
 def _linear_forecast(series, steps=7):
