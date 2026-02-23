@@ -16,6 +16,8 @@ export default function ChartsGrid({ data, forecast, setForecast }) {
       </label>
 
       <div className="charts-grid">
+        
+        {/* Electricity Chart */}
         <div className="chart-card">
           <div className="chart-header">
             <h3>⚡ Electricity (kWh)</h3>
@@ -25,6 +27,7 @@ export default function ChartsGrid({ data, forecast, setForecast }) {
           <p className="chart-note">📌 Peak: {electricity[peak_elec_idx]} kWh on {dates[peak_elec_idx]}</p>
         </div>
 
+        {/* Water Chart */}
         <div className="chart-card">
           <div className="chart-header">
             <h3>💧 Water (m³)</h3>
@@ -33,6 +36,7 @@ export default function ChartsGrid({ data, forecast, setForecast }) {
           <Line data={forecast ? buildForecastData("Water", water, water_forecast, dates, "#38bdf8") : buildLineData("Water (m³)", water, dates, water_baseline, water_alerts, "#38bdf8")} options={chartOpts("m³")} />
         </div>
 
+        {/* Food Waste Chart */}
         <div className="chart-card chart-full">
           <div className="chart-header">
             <h3>🍛 Food Waste (kg)</h3>
@@ -40,9 +44,18 @@ export default function ChartsGrid({ data, forecast, setForecast }) {
           </div>
           <Bar data={{
             labels: dates,
-            datasets: [{ label: "Food Waste (kg)", data: food, backgroundColor: food.map((_, i) => food_alerts[i] === "High" ? "#ff6b6b" : "#fb923c"), borderRadius: 4 }]
+            datasets: [{ 
+              label: "Food Waste (kg)", 
+              data: food, 
+              backgroundColor: food.map((_, i) => food_alerts[i] === "High" ? "#ff6b6b" : "#fb923c"), 
+              borderRadius: 4 
+            }]
           }} options={chartOpts("kg")} />
+          <p className="chart-note">
+            🔴 Red bars = abnormal waste days (&gt;20% above average)
+          </p>
         </div>
+
       </div>
     </>
   );
