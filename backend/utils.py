@@ -12,16 +12,33 @@ CO2_PER_WATER = 0.3    # kg CO₂/m³
 TREE_ABSORB   = 21     # kg CO₂ absorbed per tree per year
 KM_PER_CO2    = 4.0    # car km equivalent per kg CO₂
 
-# ── Helper: Rolling anomaly detection ────────────────────────────
+# Replace the _rolling_anomaly function in utils.py with this:
+
 def _rolling_anomaly(series):
-    s   = pd.Series(series)
-    avg = s.rolling(7, min_periods=1).mean()
-    dev = ((s - avg) / avg * 100).round(1)
-    alerts = [
-        "High" if d > 20 else ("Low" if d < -20 else "Normal")
-        for d in dev
-    ]
-    return avg.round(1).tolist(), dev.tolist(), alerts
+    s = pd.Series(series)
+    
+    # 1. FOR THE CHART: Calculate the wavy 7-day rolling average
+    rolling_avg = s.rolling(7, min_periods=1).mean()
+    avg_list = rolling_avg.round(1).tolist()
+    
+    # 2. FOR THE ALERTS: Calculate the strict statistical mean and std dev
+    overall_mean = s.mean()
+    std = s.std()
+    
+    # Deviation percentage based on the rolling average (for tooltips)
+    dev_list = (((s - rolling_avg) / rolling_avg) * 100).round(1).tolist()
+    
+    # Trigger High/Low alerts using the 1.5x Standard Deviation rule
+    alerts = []
+    for val in s:
+        if (val - overall_mean) > 1.5 * std:
+            alerts.append("High")
+        elif (overall_mean - val) > 1.5 * std:
+            alerts.append("Low")
+        else:
+            alerts.append("Normal")
+            
+    return avg_list, dev_list, alerts
 
 # ── Helper: Linear regression forecast ──────────────────────────
 def _linear_forecast(series, steps=7):
