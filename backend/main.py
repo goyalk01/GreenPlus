@@ -14,7 +14,9 @@ app = FastAPI(
 # ── CORS (Production Ready) ──────────────────────────────────────
 app.add_middleware(
     CORSMiddleware,
-    allow_origins     = ["http://localhost:3000"],   # ← replace with Vercel URL after deploy
+    allow_origins     = [
+        "http://localhost:3000",                  # For local development
+        "https://green-pulse-beige.vercel.app"],   # ← replace with Vercel URL after deploy
     allow_credentials = True,
     allow_methods     = ["*"],
     allow_headers     = ["*"],
