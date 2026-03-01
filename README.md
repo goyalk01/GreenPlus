@@ -241,7 +241,6 @@ MIT License © 2026 Abhinav Atul
 - FastAPI  
 - Chart.js  
 - Sustainability research studies  
-- AMD Slingshot Hackathon Inspiration  
 
 ---
 
